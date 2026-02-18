@@ -1,16 +1,29 @@
 # a_and_i_admin_web_serivce
 
-A new Flutter project.
+Admin web service built with Flutter Web.
 
-## Getting Started
+## Firebase Hosting Deployment
 
-This project is a starting point for a Flutter application.
+This repository is configured to deploy to Firebase Hosting when a tag in the
+format `vX.Y.Z` is pushed.
 
-A few resources to get you started if this is your first Flutter project:
+- Workflow file: `.github/workflows/firebase-hosting-deploy.yml`
+- Hosting config: `firebase.json`
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+### Required GitHub Settings
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+Add the following in your GitHub repository settings:
+
+- Secret: `FIREBASE_SERVICE_ACCOUNT`
+  - Firebase service account JSON (for deploy permission)
+- Secret: `API_BASE_URL` (optional)
+  - Example: `https://api.aandiclub.com`
+  - If omitted, workflow defaults to `https://api.aandiclub.com`
+- Firebase project ID is fixed to `admin-aandi-web` in workflow.
+
+### Trigger Deployment
+
+```bash
+git tag v1.0.0
+git push origin v1.0.0
+```
