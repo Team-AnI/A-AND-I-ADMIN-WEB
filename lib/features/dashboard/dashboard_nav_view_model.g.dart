@@ -1,26 +1,30 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'login_bloc.dart';
+part of 'dashboard_nav_view_model.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$loginBlocHash() => r'5fcb98570266f4496854d16582b115876f990092';
+String _$dashboardNavViewModelHash() =>
+    r'8737cc8f9d76649cf60a37afae27a8e139b1b370';
 
-/// See also [LoginBloc].
-@ProviderFor(LoginBloc)
-final loginBlocProvider =
-    AutoDisposeNotifierProvider<LoginBloc, LoginState>.internal(
-      LoginBloc.new,
-      name: r'loginBlocProvider',
+/// See also [DashboardNavViewModel].
+@ProviderFor(DashboardNavViewModel)
+final dashboardNavViewModelProvider =
+    AutoDisposeNotifierProvider<
+      DashboardNavViewModel,
+      DashboardNavTab
+    >.internal(
+      DashboardNavViewModel.new,
+      name: r'dashboardNavViewModelProvider',
       debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
           ? null
-          : _$loginBlocHash,
+          : _$dashboardNavViewModelHash,
       dependencies: null,
       allTransitiveDependencies: null,
     );
 
-typedef _$LoginBloc = AutoDisposeNotifier<LoginState>;
+typedef _$DashboardNavViewModel = AutoDisposeNotifier<DashboardNavTab>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="ko"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>A&amp;I Admin Dashboard</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            colors: {
+              "primary": "#1a1a1a",
+              "background-light": "#fcfcfc",
+              "background-dark": "#121212",
+              "sidebar-bg": "#ffffff",
+              "sidebar-border": "#e5e5e5"
+            },
+            fontFamily: {
+              "display": ["Inter", "sans-serif"]
+            },
+            borderRadius: {"DEFAULT": "0.25rem", "lg": "0.5rem", "xl": "0.75rem", "full": "9999px"},
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            -webkit-font-smoothing: antialiased;
+        }
+        .sidebar-item-active {
+            background-color: #1a1a1a;
+            color: #ffffff;
+        }
+        .sidebar-item-inactive {
+            color: #666666;
+        }
+        .sidebar-item-inactive:hover {
+            background-color: #f5f5f5;
+            color: #1a1a1a;
+        }
+    </style>
+</head>
+<body class="bg-background-light dark:bg-background-dark text-primary min-h-screen">
+<div class="flex h-screen overflow-hidden">
+<aside class="w-64 flex-shrink-0 border-r border-primary/5 bg-white dark:bg-primary/5 dark:border-white/5 flex flex-col">
+<div class="p-8 border-b border-primary/5 dark:border-white/5">
+<div class="flex items-center gap-3 text-primary dark:text-white">
+<div class="size-6 bg-primary dark:bg-white rounded flex items-center justify-center">
+<span class="material-symbols-outlined text-white dark:text-primary text-[16px]">admin_panel_settings</span>
+</div>
+<h1 class="text-sm font-bold uppercase tracking-widest">A&amp;I Admin</h1>
+</div>
+</div>
+<nav class="flex-1 px-4 py-8 space-y-1">
+<a class="sidebar-item-active flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-bold transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">group</span>
+<span>사용자 관리</span>
+</a>
+<a class="sidebar-item-inactive flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">menu_book</span>
+<span>코스 관리</span>
+</a>
+<a class="sidebar-item-inactive flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">inventory_2</span>
+<span>콘텐츠 관리</span>
+</a>
+<a class="sidebar-item-inactive flex items-center gap-3 px-4 py-3 rounded-lg text-sm font-medium transition-all" href="#">
+<span class="material-symbols-outlined text-[20px]">settings</span>
+<span>시스템 설정</span>
+</a>
+</nav>
+<div class="p-4 border-t border-primary/5 dark:border-white/5">
+<div class="flex items-center gap-3 p-2">
+<div class="size-8 rounded-full border border-primary/10 bg-white p-0.5 overflow-hidden">
+<img alt="Avatar" class="rounded-full w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBXpQcNqqJbmvfKzdOg__E7sHEFjg5-EUVoT7oOSVB9hfxJi5OP0sLpXepYr-2M6F03VeX6YfPVFtCyzbR2crt5xQF5T3LrZ21wvESQAAWQKpmy_-cXCZdujMYVEigPvx61QhXiv_rawaON1lj_HTWzxKFvETJvEkdh84we6dFtAP1Y_8gFydoUPCGNIK--spFFxOHtrwmTciwBNw-GXDit221VryW9I-0oqDagB9aFSHg8eDWj55peRukTQIII5HTCpsq0P7zGNKA"/>
+</div>
+<div class="flex flex-col">
+<span class="text-xs font-bold text-primary dark:text-white">Admin User</span>
+<span class="text-[10px] text-primary/40 dark:text-white/40 uppercase font-bold tracking-tighter">Super Admin</span>
+</div>
+</div>
+</div>
+</aside>
+<main class="flex-1 overflow-y-auto bg-background-light dark:bg-background-dark">
+<div class="mx-auto max-w-[1024px] px-8 py-12 md:py-20">
+<div class="flex flex-col gap-2 mb-10">
+<h2 class="text-3xl font-black tracking-tight text-primary dark:text-white">사용자 관리</h2>
+<p class="text-primary/50 dark:text-white/50 text-sm font-medium">플랫폼의 모든 사용자 계정을 관리하고 권한을 설정합니다.</p>
+</div>
+<div class="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-4 mb-8">
+<div class="relative flex-1 max-w-md">
+<div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none text-primary/40">
+<span class="material-symbols-outlined text-[20px]">search</span>
+</div>
+<input class="block w-full rounded-lg border-primary/10 bg-white dark:bg-primary/10 dark:border-white/10 dark:text-white py-2.5 pl-10 pr-3 text-sm placeholder:text-primary/30 focus:border-primary focus:ring-0 transition-all" placeholder="닉네임 또는 아이디로 사용자 검색..." type="text"/>
+</div>
+<button class="flex items-center justify-center gap-2 rounded-lg bg-primary dark:bg-white px-5 py-2.5 text-sm font-bold text-white dark:text-primary hover:opacity-90 transition-opacity whitespace-nowrap">
+<span class="material-symbols-outlined text-[18px]">add</span>
+<span>사용자 생성</span>
+</button>
+</div>
+<div class="overflow-hidden rounded-xl border border-primary/10 bg-white dark:bg-primary/5 dark:border-white/5">
+<div class="overflow-x-auto">
+<table class="w-full text-left border-collapse">
+<thead>
+<tr class="border-b border-primary/5 dark:border-white/5">
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-primary/40 dark:text-white/40">닉네임</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-primary/40 dark:text-white/40">아이디</th>
+<th class="px-6 py-4 text-xs font-bold uppercase tracking-wider text-primary/40 dark:text-white/40">권한</th>
+<th class="px-6 py-4 text-right text-xs font-bold uppercase tracking-wider text-primary/40 dark:text-white/40">관리</th>
+</tr>
+</thead>
+<tbody class="divide-y divide-primary/5 dark:divide-white/5">
+<tr class="hover:bg-primary/[0.02] dark:hover:bg-white/[0.02] transition-colors group">
+<td class="px-6 py-5">
+<span class="text-sm font-semibold text-primary dark:text-white">김철수</span>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm font-medium text-primary/60 dark:text-white/60 font-mono">chulsoo_kim</span>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center rounded-md bg-primary/5 dark:bg-white/5 px-2 py-1 text-xs font-bold text-primary dark:text-white">일반</span>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="text-sm font-bold text-primary dark:text-white opacity-40 group-hover:opacity-100 transition-opacity hover:underline underline-offset-4">수정</button>
+</td>
+</tr>
+<tr class="hover:bg-primary/[0.02] dark:hover:bg-white/[0.02] transition-colors group">
+<td class="px-6 py-5">
+<span class="text-sm font-semibold text-primary dark:text-white">이영희</span>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm font-medium text-primary/60 dark:text-white/60 font-mono">younghee_99</span>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center rounded-md bg-primary/5 dark:bg-white/5 px-2 py-1 text-xs font-bold text-primary dark:text-white">멘토</span>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="text-sm font-bold text-primary dark:text-white opacity-40 group-hover:opacity-100 transition-opacity hover:underline underline-offset-4">수정</button>
+</td>
+</tr>
+<tr class="hover:bg-primary/[0.02] dark:hover:bg-white/[0.02] transition-colors group">
+<td class="px-6 py-5">
+<span class="text-sm font-semibold text-primary dark:text-white">박민수</span>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm font-medium text-primary/60 dark:text-white/60 font-mono">admin_park</span>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center rounded-md bg-primary dark:bg-white px-2 py-1 text-xs font-black text-white dark:text-primary">관리자</span>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="text-sm font-bold text-primary dark:text-white opacity-40 group-hover:opacity-100 transition-opacity hover:underline underline-offset-4">수정</button>
+</td>
+</tr>
+<tr class="hover:bg-primary/[0.02] dark:hover:bg-white/[0.02] transition-colors group">
+<td class="px-6 py-5">
+<span class="text-sm font-semibold text-primary dark:text-white">최수연</span>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm font-medium text-primary/60 dark:text-white/60 font-mono">suyeon_choi</span>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center rounded-md bg-primary/5 dark:bg-white/5 px-2 py-1 text-xs font-bold text-primary dark:text-white">일반</span>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="text-sm font-bold text-primary dark:text-white opacity-40 group-hover:opacity-100 transition-opacity hover:underline underline-offset-4">수정</button>
+</td>
+</tr>
+<tr class="hover:bg-primary/[0.02] dark:hover:bg-white/[0.02] transition-colors group">
+<td class="px-6 py-5">
+<span class="text-sm font-semibold text-primary dark:text-white">정태양</span>
+</td>
+<td class="px-6 py-5">
+<span class="text-sm font-medium text-primary/60 dark:text-white/60 font-mono">sun_m_01</span>
+</td>
+<td class="px-6 py-5">
+<span class="inline-flex items-center rounded-md bg-primary/5 dark:bg-white/5 px-2 py-1 text-xs font-bold text-primary dark:text-white">멘토</span>
+</td>
+<td class="px-6 py-5 text-right">
+<button class="text-sm font-bold text-primary dark:text-white opacity-40 group-hover:opacity-100 transition-opacity hover:underline underline-offset-4">수정</button>
+</td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="mt-10 flex items-center justify-center gap-2">
+<button class="flex size-10 items-center justify-center rounded-lg border border-primary/5 dark:border-white/5 text-primary/40 hover:text-primary hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined text-[20px]">chevron_left</span>
+</button>
+<button class="flex size-10 items-center justify-center rounded-lg bg-primary dark:bg-white text-xs font-bold text-white dark:text-primary">1</button>
+<button class="flex size-10 items-center justify-center rounded-lg border border-primary/5 dark:border-white/5 text-xs font-bold text-primary/40 hover:text-primary transition-all">2</button>
+<button class="flex size-10 items-center justify-center rounded-lg border border-primary/5 dark:border-white/5 text-xs font-bold text-primary/40 hover:text-primary transition-all">3</button>
+<button class="flex size-10 items-center justify-center rounded-lg border border-primary/5 dark:border-white/5 text-xs font-bold text-primary/40 hover:text-primary transition-all">4</button>
+<button class="flex size-10 items-center justify-center rounded-lg border border-primary/5 dark:border-white/5 text-primary/40 hover:text-primary hover:bg-primary/5 transition-all">
+<span class="material-symbols-outlined text-[20px]">chevron_right</span>
+</button>
+</div>
+<footer class="mt-24 border-t border-primary/5 pt-8 text-center">
+<p class="text-[10px] font-bold uppercase tracking-[0.2em] text-primary/20 dark:text-white/20">
+                        © 2024 A&amp;I Systems. All rights reserved.
+                    </p>
+</footer>
+</div>
+</main>
+</div>
+
+</body></html>

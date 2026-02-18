@@ -6,11 +6,11 @@ part of 'auth_providers.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$authBaseUrlHash() => r'eb639cff4e4cfc109c4a71d7522338804ee0dafc';
+String _$authBaseUrlHash() => r'19c449511f3bf9a05719f28932c985c6a411cb24';
 
 /// See also [authBaseUrl].
 @ProviderFor(authBaseUrl)
-final authBaseUrlProvider = AutoDisposeProvider<String>.internal(
+final authBaseUrlProvider = Provider<String>.internal(
   authBaseUrl,
   name: r'authBaseUrlProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -22,12 +22,12 @@ final authBaseUrlProvider = AutoDisposeProvider<String>.internal(
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef AuthBaseUrlRef = AutoDisposeProviderRef<String>;
-String _$tokenStoreHash() => r'f8922f0e64fad20bce74eb3551b7687f56043374';
+typedef AuthBaseUrlRef = ProviderRef<String>;
+String _$tokenStoreHash() => r'd7cbea745a0b59dd6c94127a267f348fa8bf5c26';
 
 /// See also [tokenStore].
 @ProviderFor(tokenStore)
-final tokenStoreProvider = AutoDisposeProvider<TokenStore>.internal(
+final tokenStoreProvider = Provider<TokenStore>.internal(
   tokenStore,
   name: r'tokenStoreProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
@@ -39,7 +39,7 @@ final tokenStoreProvider = AutoDisposeProvider<TokenStore>.internal(
 
 @Deprecated('Will be removed in 3.0. Use Ref instead')
 // ignore: unused_element
-typedef TokenStoreRef = AutoDisposeProviderRef<TokenStore>;
+typedef TokenStoreRef = ProviderRef<TokenStore>;
 String _$authApiClientHash() => r'a7f3b9e4a4411dfdbb4dd32a38068cc9a70c59a3';
 
 /// See also [authApiClient].

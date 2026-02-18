@@ -9,10 +9,10 @@ import '../../domain/usecases/auth_usecases.dart';
 
 part 'auth_providers.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 String authBaseUrl(Ref ref) => 'http://172.31.33.236:8080';
 
-@riverpod
+@Riverpod(keepAlive: true)
 TokenStore tokenStore(Ref ref) => InMemoryTokenStore();
 
 @riverpod

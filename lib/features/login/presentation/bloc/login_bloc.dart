@@ -51,7 +51,17 @@ class LoginBloc extends _$LoginBloc {
 
     try {
       final login = ref.read(loginUseCaseProvider);
-      await login(username: state.username, password: state.password);
+      final session = await login(
+        username: state.username,
+        password: state.password,
+      );
+      if (session.user.role != AuthRole.admin) {
+        state = state.copyWith(
+          submissionStatus: LoginSubmissionStatus.failure,
+          errorMessage: '관리자(ADMIN) 계정만 로그인할 수 있습니다.',
+        );
+        return;
+      }
       state = state.copyWith(
         submissionStatus: LoginSubmissionStatus.success,
         clearError: true,

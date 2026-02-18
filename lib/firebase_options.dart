@@ -61,4 +61,5 @@ class DefaultFirebaseOptions {
     storageBucket: 'aandi-report-web.firebasestorage.app',
     measurementId: 'G-EF68JBP3LK',
   );
+
 }
