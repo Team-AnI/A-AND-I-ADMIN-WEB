@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:aandi_auth/aandi_auth.dart';
 
+import 'domain/entities/admin_user_provision_type.dart';
 import 'models/users_management_user_row.dart';
 import 'presentation/bloc/users_management_bloc.dart';
 import 'presentation/bloc/users_management_event.dart';
@@ -33,6 +34,37 @@ class _UsersManagementViewState extends ConsumerState<UsersManagementView> {
           .read(usersManagementBlocProvider.notifier)
           .onEvent(const UsersManagementStarted());
     });
+  }
+
+  Future<void> _onCreateUserPressed() async {
+    final formData = await _showCreateUserDialog(context);
+    if (formData == null || !mounted) {
+      return;
+    }
+
+    await ref
+        .read(usersManagementBlocProvider.notifier)
+        .onEvent(
+          UsersManagementCreateRequested(
+            role: formData.role,
+            provisionType: formData.provisionType,
+          ),
+        );
+    if (!mounted) return;
+
+    final nextState = ref.read(usersManagementBlocProvider);
+    final isSuccess =
+        nextState.status == UsersManagementStatus.success &&
+        nextState.errorMessage == null;
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(
+          isSuccess
+              ? '사용자가 생성되었습니다.'
+              : (nextState.errorMessage ?? '사용자 생성에 실패했습니다.'),
+        ),
+      ),
+    );
   }
 
   @override
@@ -108,7 +140,7 @@ class _UsersManagementViewState extends ConsumerState<UsersManagementView> {
                     ),
                   ),
                   FilledButton.icon(
-                    onPressed: () {},
+                    onPressed: _onCreateUserPressed,
                     style: FilledButton.styleFrom(
                       backgroundColor: const Color(0xFF1A1A1A),
                       foregroundColor: Colors.white,
@@ -194,4 +226,103 @@ class _UsersManagementViewState extends ConsumerState<UsersManagementView> {
       ),
     );
   }
+}
+
+class _CreateUserFormData {
+  const _CreateUserFormData({required this.role, required this.provisionType});
+
+  final AuthRole role;
+  final AdminUserProvisionType provisionType;
+}
+
+Future<_CreateUserFormData?> _showCreateUserDialog(BuildContext context) {
+  final formKey = GlobalKey<FormState>();
+  AuthRole selectedRole = AuthRole.user;
+  AdminUserProvisionType selectedProvisionType = AdminUserProvisionType.invite;
+
+  return showDialog<_CreateUserFormData>(
+    context: context,
+    builder: (dialogContext) {
+      return AlertDialog(
+        title: const Text('사용자 생성'),
+        content: StatefulBuilder(
+          builder: (context, setState) {
+            return Form(
+              key: formKey,
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
+                children: [
+                  DropdownButtonFormField<AuthRole>(
+                    initialValue: selectedRole,
+                    decoration: const InputDecoration(labelText: '권한'),
+                    items: const [
+                      DropdownMenuItem(
+                        value: AuthRole.user,
+                        child: Text('일반(USER)'),
+                      ),
+                      DropdownMenuItem(
+                        value: AuthRole.organizer,
+                        child: Text('멘토(ORGANIZER)'),
+                      ),
+                      DropdownMenuItem(
+                        value: AuthRole.admin,
+                        child: Text('관리자(ADMIN)'),
+                      ),
+                    ],
+                    onChanged: (value) {
+                      if (value == null) return;
+                      setState(() {
+                        selectedRole = value;
+                      });
+                    },
+                  ),
+                  const SizedBox(height: 12),
+                  DropdownButtonFormField<AdminUserProvisionType>(
+                    initialValue: selectedProvisionType,
+                    decoration: const InputDecoration(labelText: '생성 방식'),
+                    items: const [
+                      DropdownMenuItem(
+                        value: AdminUserProvisionType.invite,
+                        child: Text('초대 링크(INVITE)'),
+                      ),
+                      DropdownMenuItem(
+                        value: AdminUserProvisionType.password,
+                        child: Text('임시 비밀번호(PASSWORD)'),
+                      ),
+                    ],
+                    onChanged: (value) {
+                      if (value == null) return;
+                      setState(() {
+                        selectedProvisionType = value;
+                      });
+                    },
+                  ),
+                ],
+              ),
+            );
+          },
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.of(dialogContext).pop(),
+            child: const Text('취소'),
+          ),
+          FilledButton(
+            onPressed: () {
+              if (!(formKey.currentState?.validate() ?? false)) {
+                return;
+              }
+              Navigator.of(dialogContext).pop(
+                _CreateUserFormData(
+                  role: selectedRole,
+                  provisionType: selectedProvisionType,
+                ),
+              );
+            },
+            child: const Text('생성'),
+          ),
+        ],
+      );
+    },
+  );
 }

@@ -14,6 +14,7 @@ class AdminApp extends ConsumerStatefulWidget {
 }
 
 class _AdminAppState extends ConsumerState<AdminApp> {
+  static const bool _bypassAuthForDashboard = false;
   late final GoRouter _router;
 
   @override
@@ -22,6 +23,10 @@ class _AdminAppState extends ConsumerState<AdminApp> {
     _router = GoRouter(
       initialLocation: '/dashboard',
       redirect: (context, state) {
+        if (_bypassAuthForDashboard) {
+          return null;
+        }
+
         final isLoggedIn = ref.read(authBlocProvider).isAuthenticated;
         final isLoginRoute = state.matchedLocation == '/login';
 

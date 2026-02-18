@@ -16,7 +16,7 @@ void main() {
   ) async {
     await tester.pumpWidget(const ProviderScope(child: AdminApp()));
 
-    expect(find.text('Admin Login'), findsOneWidget);
+    expect(find.text('관리자 로그인'), findsOneWidget);
     expect(find.text('Dashboard'), findsNothing);
   });
 }

@@ -5,6 +5,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 
 import '../../data/datasources/users_management_api_client.dart';
 import '../../data/repositories/users_management_repository_impl.dart';
+import '../../domain/entities/admin_user_provision_type.dart';
 import '../../domain/repositories/users_management_repository.dart';
 import '../../domain/usecases/get_admin_users_use_case.dart';
 import 'users_management_event.dart';
@@ -44,6 +45,8 @@ class UsersManagementBloc extends _$UsersManagementBloc {
         await _loadUsers();
       case UsersManagementRefreshRequested():
         await _loadUsers();
+      case UsersManagementCreateRequested(:final role, :final provisionType):
+        await _createUser(role: role, provisionType: provisionType);
     }
   }
 
@@ -74,6 +77,33 @@ class UsersManagementBloc extends _$UsersManagementBloc {
       state = state.copyWith(
         status: UsersManagementStatus.failure,
         errorMessage: '사용자 목록을 불러오지 못했습니다.',
+      );
+    }
+  }
+
+  Future<void> _createUser({
+    required AuthRole role,
+    required AdminUserProvisionType provisionType,
+  }) async {
+    try {
+      await ref
+          .read(usersManagementRepositoryProvider)
+          .createUser(role: role, provisionType: provisionType);
+      await _loadUsers();
+    } on UsersManagementApiException catch (e) {
+      state = state.copyWith(
+        status: UsersManagementStatus.failure,
+        errorMessage: e.message,
+      );
+    } on AuthApiException catch (e) {
+      state = state.copyWith(
+        status: UsersManagementStatus.failure,
+        errorMessage: e.message,
+      );
+    } catch (_) {
+      state = state.copyWith(
+        status: UsersManagementStatus.failure,
+        errorMessage: '사용자 생성에 실패했습니다.',
       );
     }
   }

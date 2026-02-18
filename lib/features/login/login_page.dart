@@ -16,6 +16,7 @@ class LoginPage extends ConsumerStatefulWidget {
 }
 
 class _LoginPageState extends ConsumerState<LoginPage> {
+  static const bool _isLoginEnabled = true;
   final _formKey = GlobalKey<FormState>();
   final _idController = TextEditingController();
   final _passwordController = TextEditingController();
@@ -28,6 +29,10 @@ class _LoginPageState extends ConsumerState<LoginPage> {
   }
 
   Future<void> _submit() async {
+    if (!_isLoginEnabled) {
+      return;
+    }
+
     if (!(_formKey.currentState?.validate() ?? false)) {
       return;
     }
@@ -110,18 +115,23 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 8),
-                      const Text(
-                        'ADMIN 권한 계정으로 로그인해주세요.',
+                      Text(
+                        _isLoginEnabled
+                            ? 'ADMIN 권한 계정으로 로그인해주세요.'
+                            : '현재 로그인 기능이 임시 비활성화 상태입니다.',
                         style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w600,
-                          color: Color(0xFF8A8A8A),
+                          color: _isLoginEnabled
+                              ? const Color(0xFF8A8A8A)
+                              : const Color(0xFFB00020),
                         ),
                         textAlign: TextAlign.center,
                       ),
                       const SizedBox(height: 24),
                       TextFormField(
                         controller: _idController,
+                        enabled: _isLoginEnabled,
                         decoration: const InputDecoration(
                           labelText: 'Username',
                           filled: true,
@@ -142,6 +152,7 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                       const SizedBox(height: 12),
                       TextFormField(
                         controller: _passwordController,
+                        enabled: _isLoginEnabled,
                         obscureText: true,
                         decoration: const InputDecoration(
                           labelText: 'Password',
@@ -175,7 +186,8 @@ class _LoginPageState extends ConsumerState<LoginPage> {
                         ),
                       FilledButton(
                         onPressed:
-                            state.canSubmit &&
+                            _isLoginEnabled &&
+                                state.canSubmit &&
                                 state.submissionStatus !=
                                     LoginSubmissionStatus.submitting
                             ? _submit
