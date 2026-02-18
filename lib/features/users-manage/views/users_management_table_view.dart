@@ -48,9 +48,11 @@ class UsersManagementTableView extends StatelessWidget {
             rows: users
                 .map(
                   (user) => DataRow(
-                    onSelectChanged: (_) => onUserTap(user),
                     cells: [
-                      DataCell(Text(user.username)),
+                      DataCell(
+                        Text(user.username),
+                        onTap: () => onUserTap(user),
+                      ),
                       DataCell(
                         Text(
                           user.username,
@@ -59,6 +61,7 @@ class UsersManagementTableView extends StatelessWidget {
                             fontFamily: 'monospace',
                           ),
                         ),
+                        onTap: () => onUserTap(user),
                       ),
                       DataCell(
                         Container(
@@ -87,6 +90,7 @@ class UsersManagementTableView extends StatelessWidget {
                             ),
                           ),
                         ),
+                        onTap: () => onUserTap(user),
                       ),
                       DataCell(
                         TextButton(
