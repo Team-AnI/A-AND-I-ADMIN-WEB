@@ -1,5 +1,0 @@
-{
-  "last_turn_at": "2026-02-22T09:07:33.366Z",
-  "turn_count": 4,
-  "last_agent_output": "커밋 전에 워킹트리를 확인했는데, 제가 수정한 `README.md` 외에 변경이 있습니다.\n\n- `lib/main.dart` (수정됨)\n- `.omx/` (신규 파일/폴더)\n\n지침"
-}
